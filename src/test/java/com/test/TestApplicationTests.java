@@ -19,6 +19,11 @@ class TestApplicationTests {
     private User2Mapper user2Mapper;
 
     @Test
+    void getAll(){
+        System.out.println(user1Mapper.selectList(null));
+    }
+
+    @Test
     void contextLoads() {
         User1 user1=new User1();
         user1.setName("张三");

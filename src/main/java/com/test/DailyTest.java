@@ -1,15 +1,14 @@
 package com.test;
 
 //i++和++i运算
-
 public class DailyTest {
 
     public static void main(String[] args) {
-        int i=6;
-        i=i++;//i=6
-        int j=i++;//j=6    i=7
-        j=j--;//j=6
-        int k=i++ - j-- + ++i - --j + i*j - j++ - i-- - ++j - --i;//i=7  j=6    k=16  7-6+9-4+9*4-4-9-6-7
+        int i=1;
+        i=i++;//i=1
+        int j=i++;//j=1    i=2
+        j=j--;//j=1
+        int k=i++ - j-- - ++i - --j - i*j - j++ - i-- - ++j - --i;//i=2  j=1    k=-4  2-1-4-(-1)-4*(-1)-(-1)-4-1-2
 
         System.out.println(i);
         System.out.println(j);
