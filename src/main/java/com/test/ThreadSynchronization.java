@@ -4,7 +4,8 @@ public class ThreadSynchronization {
 
     private ThreadSynchronization(){};
 
-    private static ThreadSynchronization instance=null;
+    //加入volatile禁止指令重排导致数据异常
+    private static volatile ThreadSynchronization instance=null;
 
     static Runnable r1=new Runnable() {
         @Override
@@ -26,7 +27,6 @@ public class ThreadSynchronization {
     }
 
     public static ThreadSynchronization getInstance(){
-
         //有可能在多线程访问的时候重复new对象
         if(instance==null) {
             synchronized (ThreadSynchronization.class){

@@ -8,5 +8,4 @@ public class HungrySigleton {
     }
 
     private static final HungrySigleton INSTANCE=new HungrySigleton();
-
 }
