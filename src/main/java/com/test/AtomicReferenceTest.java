@@ -14,7 +14,7 @@ class User{
     private int age;
 }
 
-//带可见性和原子性的对象引用包装类
+//原子性对象引用包装类
 public class AtomicReferenceTest {
 
     public static void main(String[] args) {
