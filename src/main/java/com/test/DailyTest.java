@@ -1,6 +1,6 @@
 package com.test;
 
-//i++和++i运算
+//i++和++i运算训练
 public class DailyTest {
 
     public static void main(String[] args) {
