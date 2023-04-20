@@ -1,13 +1,13 @@
 package com.test;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
+//带返回值的Callable接口
 public class CallableTest {
 
     public static void main(String[] args) {
         FutureTask task=new FutureTask(new CallableThread());
+
         new Thread(task,"CallableThread").start();
         try {
             Thread.sleep(1000);
@@ -27,7 +27,7 @@ public class CallableTest {
 
         @Override
         public Object call() throws Exception {
-            System.out.println(Thread.currentThread()+"CallableThread is run!");
+            System.out.println(Thread.currentThread().getName()+" is run!");
             return 200;
         }
     }
