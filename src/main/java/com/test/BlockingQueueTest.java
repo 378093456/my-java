@@ -11,8 +11,8 @@ public class BlockingQueueTest {
     //和ArrayList不同，ArrayBlockingQueue容量是有界的，需要给定容量大小
     static ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(3);
 
-    //linkedBlockingQueue理论有界，默认Integer类的最大值,太大了谨慎使用
-//    static LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
+    //linkedBlockingQueue理论有界，默认Integer类的最大值,也可以指定大小
+    static LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
 
     //同步队列，生产者消费者模式
     static SynchronousQueue synchronousQueue=new SynchronousQueue();

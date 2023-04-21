@@ -73,7 +73,8 @@ jvm运行时数据区域包含哪些？
 实现Runnable接口（无返回值、不抛异常），重写run()；
 实现Callable接口（带返回值、抛异常），重写call()，因为Thread类没有直接实现Callable的方法，
 需要通过FutureTask，而FutureTask实现了Runnable接口；
-通过ExecutorService创建线程池
+通过ExecutorService创建线程池;
+通过ThreadPoolExecutor手写线程池
 
 FutureTask.isDone()
 FutureTask.isDone()返回Callable线程是否执行完成
@@ -104,7 +105,8 @@ interrupt()方法是用于中断被阻塞的线程
 start()方法是用来启动线程的，run()方法里面是具体执行的代码
 
 Lock()和tryLock()的区别？
-lock()没有返回值，尝试获取锁失败会阻塞，tryLock()带返回值，尝试获取锁失败可以避免阻塞
+lock()没有返回值，尝试获取锁失败会阻塞；
+tryLock()带返回值，尝试获取锁失败有返回可以避免阻塞，可以设置超时
 
 什么是CountdownLatch？
 CountdownLatch是JUC下一个锁相关的类，用于主线程等待所有子线程执行完成再执行，new一个
