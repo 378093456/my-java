@@ -9,11 +9,31 @@ JVM是java虚拟机，编译好的字节码文件通过ClassLoader类加载器转换成机器能识别的语言
 GC过程
 new对象存放在新生代中，当新生代中Eden区满了会触发GC，把有引用的对象复制到from区然后Eden区回收垃圾，
 当Eden区再次GC时，会将Eden区和from区有引用的对象复制到to区，Eden区和from区回收垃圾同时对象年龄+1，
-然后from区和to区会交换身份，当对象年龄达到老年标准，对象就会被复制到老年代，俗称YGC；
-但老年代满了会产生full GC，它会停止除GC任务外的一切任务
+然后from区和to区会交换身份，当对象年龄达到老年标准，对象就会被复制到老年代，俗称young GC；
+但老年代满了会触发old GC，young GC和old GC会产生STW，会停止除GC任务外的一切任务
 
 常见的垃圾回收算法有哪些？
 引用计数（JVM已废除）、复制（用于新生代）、标记清除和标记整理（用于老年代）
+
+什么是GC Roots？
+GC Roots是枚举根节点，可达性分析的对象起点，从这个起点开始，能被遍历到的对象表示可达，判定为存活，否则
+判定死亡
+
+排查故障的方式有哪些？
+查看Linux日志；
+使用Idea终端jps命令定位进程号，和jstack命令查看java堆栈信息
+
+JVM的XX参数
+PrintGCDetails（布尔型）：是否打印GC收集细节；
+MatespaceSize（键值型）：设置元空间大小；
+MaxTenuringThreshold（键值型）：设置新生代到老年代的年龄条件
+通过Idea终端jps命令和jinfo命令查看参数值
+
+查看全局参数命令
+查看初始参数：java -XX:+PrintFlagsInitial
+查看最终参数：java -XX:+PrintFlagsFinal
+=表示没改过
+:=表示人为改过或JVM改过
 
 什么是JMM？
 JMM是java内存模型，它并不真实存在，是线程级别的工作内存，用于对变量的操作
@@ -27,9 +47,6 @@ locks包提供了一些锁的实现，底层是AQS抽象队列同步器
 AQS是抽象队列同步器，是JUC下锁相关的类，将没有获取锁的线程设置成一个int类型的节点状态放到队列里，
 当一个线程释放锁后，会将这个队列里的线程唤醒再次尝试获取锁，用getState()获取节点状态，
 然后它用了CAS的方法和setState()去更改节点状态
-
-thread.yield()的作用
-线程让步，将当前线程改为可阻塞状态
 
 volatile关键字的特性
 多线程中，保证数据可见性和禁止指令重排，不保证原子性
@@ -110,8 +127,4 @@ AbortPolicy（默认）：抛出拒绝执行异常，且停止执行；
 CallerRunsPolicy：调用者执行机制，把任务交给父线程执行；
 DiscardOldestPolicy：抛弃队列中等待最久的任务并将当前任务加入队列尝试再次提交；
 DiscardPolicy：丢弃任务，不处理也不抛异常
-
-排查故障的方式有哪些？
-查看Linux日志；
-使用Idea终端jps命令定位进程号，和jstack命令查看java堆栈信息
 

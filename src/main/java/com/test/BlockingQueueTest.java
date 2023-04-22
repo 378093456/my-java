@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 
-//堵塞队列
+//阻塞队列
 public class BlockingQueueTest {
 
     //和ArrayList不同，ArrayBlockingQueue容量是有界的，需要给定容量大小

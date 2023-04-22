@@ -4,8 +4,8 @@ mysqlË÷ÒýÓÅ»¯
 
 jvmÎªÊ²Ã´ÒªÇø·ÖÐÂÉú´úºÍÀÏÄê´ú£¬ÎªÊ²Ã´Òª·ÖedenÇøºÍsurvialÇø£¿
 ³ÌÐòÔËÐÐ»á²úÉúº£Á¿ÁÙÊ±¶ÔÏó£¬ÕâÐ©¶ÔÏó±»ÁÙÊ±·ÅÔÚÐÂÉú´ú£¬ÐÂÉú´úÂúÁËÐèÒªÇåÀíÀ¬»ø»á°ÑÓÐÐ§¶ÔÏó
-¸´ÖÆµ½ÀÏÄê´ú£¬¶øÎªÁËÇø·ÖÄÄÐ©¶ÔÏóÓ¦¸Ã¸´ÖÆµ½ÀÏÄê´ú£¨¿É´ïÐÔ·ÖÎö£©£¬ËùÒÔÔÚÐÂÉú´ú»®·ÖÁËedenÇøºÍsurvialÇø£¬
-ÕâÑù¾Í±£Ö¤ÁË¸ßËÙ¶ÁÐ´ºÍÄÚ´æÁ¬Ðø 
+¸´ÖÆµ½ÀÏÄê´ú£¬¶øÎªÁËÇø·ÖÄÄÐ©¶ÔÏóÓ¦¸Ã¸´ÖÆµ½ÀÏÄê´ú£¬ËùÒÔÔÚÐÂÉú´ú»®·ÖÁËedenÇøºÍsurvialÇø£¬
+ÕâÑù¾Í±£Ö¤ÁËÄÚ´æÁ¬ÐøÌá¸ßÐÔÄÜ
 
 ³£¼ûµÄÔ¶³Ìµ÷ÓÃ
 tcpºÍudpÐ­Òé¡¢httpÐ­Òé£¨»ùÓÚtcp£©¡¢dubbo
@@ -63,7 +63,7 @@ static·½·¨¡¢final·½·¨¡¢private·½·¨
 
 jvmÔËÐÐÊ±Êý¾ÝÇøÓò°üº¬ÄÄÐ©£¿
 ¶Ñ£º´æ·Å¶ÔÏóµÄÊµÀý
-Õ»£º´æ·Å¾Ö²¿±äÁ¿
+Õ»£º´æ·Å¾Ö²¿±äÁ¿ºÍ¶ÔÏóÒýÓÃ
 ±¾µØ·½·¨Õ»£ºËü¿ÉÒÔµ÷ÓÃÏµÍ³±¾µØµÄ·½·¨£¬±ÈÈç¿ØÖÆÌ¨Êä³öºÍ»ñÈ¡µ±Ç°ÏµÍ³Ê±¼ä´Á
 ·½·¨Çø£º´æ·ÅÀàµÄÐÅÏ¢¡¢³£Á¿ºÍ¾²Ì¬±äÁ¿
 ³ÌÐò¼ÆÊýÆ÷£ºÓÃÓÚ¼ÆËã³ÌÐòÏÂÒ»ÌõÐèÒªÖ´ÐÐµÄ×Ö½ÚÂëÖ¸Áî
@@ -99,7 +99,10 @@ ConditionÀàÊÇJUCÏÂ¸úËøÓÐ¹ØµÄÀà£¬ÓÃÓÚÊµÏÖ¶àÏß³ÌµÄµÈ´ýºÍ»½ÐÑ£¬Óëwait()/notify()Ëæ»
 ¾«È·»½ÐÑÏß³Ì
 
 interrupt()·½·¨µÄ×÷ÓÃ
-interrupt()·½·¨ÊÇÓÃÓÚÖÐ¶Ï±»×èÈûµÄÏß³Ì
+Èç¹ûÏß³Ì±»wait()¡¢sleep()×èÈû£¬interrupt()·½·¨¿ÉÒÔÖÐ¶Ï±»×èÈûµÄÏß³Ì
+
+thread.yield()µÄ×÷ÓÃ
+Í¬¼¶±ðÏß³ÌÈÃ²½£¬½«µ±Ç°Ïß³Ì´ÓÔËÐÐ×´Ì¬¸Ä³É¿ÉÔËÐÐ×´Ì¬
 
 ¶àÏß³ÌÖÐstart()·½·¨ºÍrun()·½·¨µÄÇø±ðÊÇÊ²Ã´£¿
 start()·½·¨ÊÇÓÃÀ´Æô¶¯Ïß³ÌµÄ£¬run()·½·¨ÀïÃæÊÇ¾ßÌåÖ´ÐÐµÄ´úÂë

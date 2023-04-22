@@ -17,10 +17,10 @@ public class VolatileTest {
     }
 
     public static void main(String[] args) {
-        VolatileTest test0407=new VolatileTest();
+        VolatileTest volatileTest=new VolatileTest();
         for(int x=0;x<5;x++){
             new Thread(()->{
-                while(test0407.getI()<10){
+                while(volatileTest.getI()<10){
 
                 }
                 System.out.println("it's ok!");
@@ -31,6 +31,6 @@ public class VolatileTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        test0407.setI(20);
+        volatileTest.setI(20);
     }
 }

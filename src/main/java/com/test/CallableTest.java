@@ -11,10 +11,6 @@ public class CallableTest {
         new Thread(task,"CallableThread").start();
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
             System.out.println(task.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
