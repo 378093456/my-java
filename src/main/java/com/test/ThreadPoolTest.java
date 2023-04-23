@@ -34,7 +34,7 @@ public class ThreadPoolTest {
 
     //手写线程池，设置7大参数
     static void handwrittenThreadPool(){
-        //获取CPU线程数
+        //获取CPU核数
         System.out.println("CPU核数"+"\t"+Runtime.getRuntime().availableProcessors());
         //合理设置线程数
         //CPU密集型系统：CPU核数*2；
