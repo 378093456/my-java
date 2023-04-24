@@ -15,9 +15,19 @@ new¶ÔÏó´æ·ÅÔÚÐÂÉú´úÖÐ£¬µ±ÐÂÉú´úÖÐEdenÇøÂúÁË»á´¥·¢GC£¬°ÑÓÐÒýÓÃµÄ¶ÔÏó¸´ÖÆµ½fromÇøÈ
 ³£¼ûµÄÀ¬»ø»ØÊÕËã·¨ÓÐÄÄÐ©£¿
 ÒýÓÃ¼ÆÊý£¨JVMÒÑ·Ï³ý£©¡¢¸´ÖÆ£¨ÓÃÓÚÐÂÉú´ú£©¡¢±ê¼ÇÇå³ýºÍ±ê¼ÇÕûÀí£¨ÓÃÓÚÀÏÄê´ú£©
 
+³£¼ûµÄÀ¬»ø»ØÊÕ·½Ê½£¨À¬»ø»ØÊÕÆ÷£©ÓÐÄÄÐ©£¿
+´®ÐÐ£ºÊ¹ÓÃµ¥¸öÏß³Ì½øÐÐÀ¬»ø»ØÊÕÇÒÓÃ»§Ïß³ÌÔÝÍ££»
+²¢ÐÐ£¨java8Ä¬ÈÏ£©£ºÊ¹ÓÃ¶àÏß³Ì½øÐÐÀ¬»ø»ØÊÕÇÒÓÃ»§Ïß³ÌÔÝÍ££»
+²¢·¢±ê¼ÇÇå³ý£¨CMS£©£ºÓÃ»§Ïß³ÌºÍÀ¬»ø»ØÊÕÏß³ÌÍ¬Ê±Ö´ÐÐ£¬ÊÊÓÃÓÚ¶ÔÏìÓ¦ËÙ¶ÈÓÐÒªÇóµÄ³¡¾°£»
+G1£¨java9Ä¬ÈÏ£©£º½«¶ÑÄÚ´æ·Ö¸î³É²»Í¬µÄÇø²¢·¢½øÐÐÀ¬»ø»ØÊÕ£»
+ZGC£¨java11£©
+
 Ê²Ã´ÊÇGC Roots£¿
 GC RootsÊÇÃ¶¾Ù¸ù½Úµã£¬¿É´ïÐÔ·ÖÎöµÄ¶ÔÏóÆðµã£¬´ÓÕâ¸öÆðµã¿ªÊ¼£¬Á´Â·ÄÜµ½´ïµÄ¶ÔÏó±íÊ¾¿É´ï£¬ÅÐ¶¨Îª´æ»î£¬·ñÔò
 ÅÐ¶¨ËÀÍö
+
+Ê²Ã´ÊÇJMM£¿
+JMMÊÇjavaÄÚ´æÄ£ÐÍ£¬Ëü²¢²»ÕæÊµ´æÔÚ£¬ÊÇÏß³Ì¼¶±ðµÄ¹¤×÷ÄÚ´æ£¬ÓÃÓÚ¶Ô±äÁ¿µÄ²Ù×÷
 
 ÅÅ²é¹ÊÕÏµÄ·½Ê½ÓÐÄÄÐ©£¿
 ²é¿´LinuxÈÕÖ¾£»
@@ -30,9 +40,10 @@ JVM³£ÓÃXX²ÎÊý
 -XX:InitialHeapSize£¨-Xms£©£ºÉèÖÃ³õÊ¼¶ÑÄÚ´æ£¬Ä¬ÈÏÎïÀíÄÚ´æ1/64£»
 -XX:MaxHeapSize£¨-Xmx£©£ºÉèÖÃ×î´ó¶ÑÄÚ´æ£¬Ä¬ÈÏÎïÀíÄÚ´æ1/4£»
 -XX:ThreadStackSize£¨-Xss£©£ºÉèÖÃÏß³ÌÕ»´óÐ¡£¬Ä¬ÈÏÖµÊÇ0£¬0±íÊ¾JDKÎªÏµÍ³£¨Linux¡¢macOS»òWindows£©ÉèÖÃµÄÄ¬ÈÏ´óÐ¡ÊÇ1024kb
+-XX:MaxDirectMemorySize£ºÉèÖÃ×î´óÖ±½ÓÄÚ´æ´óÐ¡£»
 -Xmn£ºÉèÖÃÉèÖÃÄêÇá´ú´óÐ¡£¬Ä¬ÈÏ¶ÑÄÚ´æµÄ1/3£»
--XX:SurvivorRatio£ºÉèÖÃEdenÇøÔÚÄêÇá´úµÄ±ÈÀý£»
--XX:NewRatatio£ºÉèÖÃÀÏÄê´úÔÚ¶ÑÄÚ´æµÄ±ÈÀý
+-XX:SurvivorRatio£ºÉèÖÃEdenÇøÔÚÄêÇá´úµÄ±ÈÀý£¬Ä¬ÈÏ8:1:1£»
+-XX:NewRatatio£ºÉèÖÃÀÏÄê´úÔÚ¶ÑÄÚ´æµÄ±ÈÀý£¬Ä¬ÈÏ2:1
 Í¨¹ýIdeaÖÕ¶ËjpsÃüÁîºÍjinfoÃüÁî²é¿´²ÎÊýÖµ
 
 ²é¿´È«¾Ö²ÎÊýÃüÁî
@@ -42,10 +53,23 @@ JVM³£ÓÃXX²ÎÊý
 :=±íÊ¾ÈËÎª¸Ä¹ý»òJVM¸Ä¹ý
 
 JVM²ÎÊýµ÷ÓÅÄ£°å
--XX:+PrintGCDetails -Xms128m -Xmx2048m -Xss1024k -XX:MetaSpaceSize=512m -XX:+PrintCommandLineflags -XX:+UseSerialGC
+-XX:+PrintGCDetails -Xms128m -Xmx2048m -Xss1024k -XX:MetaSpaceSize=512m -XX:+PrintCommandLineflags
 
-Ê²Ã´ÊÇJMM£¿
-JMMÊÇjavaÄÚ´æÄ£ÐÍ£¬Ëü²¢²»ÕæÊµ´æÔÚ£¬ÊÇÏß³Ì¼¶±ðµÄ¹¤×÷ÄÚ´æ£¬ÓÃÓÚ¶Ô±äÁ¿µÄ²Ù×÷
+4´óÒýÓÃÀàÐÍÓÐÄÄÐ©£¿
+Ç¿ÒýÓÃ£ºÖ±½Ónew¶ÔÏó£¬¼´Ê¹·¢ÉúÁËOOMÒ²²»»á±»GC»ØÊÕ£»
+ÈíÒýÓÃ£ºÓÃSoftReference£¬·¢ÉúÁËOOM²Å»á±»GC»ØÊÕ£»
+ÈõÒýÓÃ£ºÓÃWeakReference£¬·¢ÉúGC¾Í»á±»»ØÊÕ£»
+ÐéÒýÓÃ£ºPhantomReferenceºÍReferenceQueueÁªºÏÊ¹ÓÃ£¬·¢ÉúGC»á±»·ÅÈëÒýÓÃ¶ÓÁÐ
+Èí¡¢ÈõÒýÓÃ¿ÉÓÃÓÚ¸ßËÙ»º´æ³¡¾°£¬¼È±£Ö¤ÁË¶ÁÈ¡ËÙ¶ÈÓÖ²»Õ¼ÄÚ´æ
+
+³£¼ûµÄ´íÎóÓÐÄÄÐ©£¿
+StackOverflowError£ºÕ»Òç³ö£»
+OOMÀà´íÎó£º
+java heap space¶ÑÄÚ´æ²»×ã¡¢
+MetaspaceÔª¿Õ¼ä²»×ã¡¢
+GC overhead limit exceeded¹ý¶ÈÀ¬»ø»ØÊÕ£¨À¬»ø»ØÕ¼ÓÃ98%×ÊÔ´£©¡¢
+Direct buffer memoryÖ±½ÓÄÚ´æ²»×ã¡¢
+unable to create new native threadÏß³Ì´´½¨³¬³öÏµÍ³ÏÞÖÆ
 
 Ê²Ã´ÊÇJUC£¿
 JUCÊÇjava²¢·¢¹¤¾ß°ü£¬Ëü´æÔÚÓÚjdkµÄrj.jarÖÐ£¬Ëü°üº¬atomic°üºÍlocks°ü£¬

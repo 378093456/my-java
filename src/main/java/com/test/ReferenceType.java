@@ -1,5 +1,7 @@
 package com.test;
 
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
@@ -60,7 +62,29 @@ public class ReferenceType {
         System.out.println("WeakHashMap："+weakHashMap);
     }
 
-    //
+    //虚引用，和引用队列联合使用
+    static void phantomReference(){
+        ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
+        PhantomReference<Object> phantomReference = new PhantomReference<Object>(obj,referenceQueue);
+        obj=null;
+
+        System.out.println("虚引用GC前：");
+        System.out.println("PhantomReference："+phantomReference.get());
+        System.out.println("ReferenceQueue："+referenceQueue.poll());
+
+        //直接手动GC
+        System.gc();
+
+        try {
+            //设置睡眠时间，GC后会放入引用队列
+            Thread.sleep(500);
+            System.out.println("虚引用GC后：");
+            System.out.println("PhantomReference："+phantomReference.get());
+            System.out.println("ReferenceQueue："+referenceQueue.poll());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         //强引用，即使发生OOM了也不会被GC
@@ -70,8 +94,9 @@ public class ReferenceType {
 //        softReference();
 
         //弱引用，发生GC就会被回收
-        weakReference();
+//        weakReference();
 
-        //
+        //虚引用，
+        phantomReference();
     }
 }
