@@ -1,7 +1,5 @@
 package com.test;
 
-import com.mysql.cj.util.StringUtils;
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +49,7 @@ public class BlockingQueueAndProducerConsumer {
                     //获取值
                     result= String.valueOf(blockingQueue.poll(3000, TimeUnit.MILLISECONDS));
                     //判断是否为null或空字符串
-                    if(StringUtils.isNullOrEmpty(result)){
+                    if(null==result || result==""){
                         System.out.println(Thread.currentThread().getName()+"\t获取队列失败");
                         //退出循环
                         return;
