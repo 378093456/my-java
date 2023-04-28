@@ -9,13 +9,18 @@ public class CallableTest {
         FutureTask task=new FutureTask(new CallableThread());
 
         new Thread(task,"CallableThread").start();
-        try {
-            Thread.sleep(1000);
-            System.out.println(task.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        //判断Callable是否执行完
+        while (true){
+            if (task.isDone()){
+                try {
+                    System.out.println(task.get());
+                    return;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -24,6 +29,7 @@ public class CallableTest {
         @Override
         public Object call() throws Exception {
             System.out.println(Thread.currentThread().getName()+" is run!");
+            Thread.sleep(5000);
             return 200;
         }
     }

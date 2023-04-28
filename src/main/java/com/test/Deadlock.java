@@ -7,32 +7,32 @@ public class Deadlock {
         Object object1 = new Object();
         Object object2 = new Object();
 
-        new Thread(()->{
-            synchronized(object1){
-                System.out.println(Thread.currentThread().getName()+"获取object1");
+        new Thread(() -> {
+            synchronized (object1) {
+                System.out.println(Thread.currentThread().getName() + "获取object1");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                synchronized(object2){
-                    System.out.println(Thread.currentThread().getName()+"获取object2");
+                synchronized (object2) {
+                    System.out.println(Thread.currentThread().getName() + "获取object2");
                 }
             }
-        },"thread-A").start();
+        }, "thread-A").start();
 
-        new Thread(()->{
-            synchronized(object2){
-                System.out.println(Thread.currentThread().getName()+"获取object2");
+        new Thread(() -> {
+            synchronized (object2) {
+                System.out.println(Thread.currentThread().getName() + "获取object2");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                synchronized(object1){
-                    System.out.println(Thread.currentThread().getName()+"获取object1");
+                synchronized (object1) {
+                    System.out.println(Thread.currentThread().getName() + "获取object1");
                 }
             }
-        },"thread-B").start();
+        }, "thread-B").start();
     }
 }
