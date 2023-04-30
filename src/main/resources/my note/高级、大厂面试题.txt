@@ -1,170 +1,170 @@
-ʲô��JVM
-JVM��java�����������õ��ֽ����ļ�ͨ��ClassLoader�������ת���ɻ�����ʶ������ԣ�һ�α��뵽��ִ�У�
-��ƽ̨��ǿ
+﻿什么是JVM
+JVM是java虚拟机，编译好的字节码文件通过ClassLoader类加载器转换成机器能识别的语言，一次编译到处执行，
+跨平台性强
 
-����һ��JVM����Class�ļ�ԭ��
-ͨ��ClassLoader����������أ���3���������������֮���и��ӹ�ϵ������������������ѯ�ʸ��������Ƿ���ع���
-��˫��ί�ɻ���
+简述一下JVM加载Class文件原理
+通过ClassLoader类加载器加载，有3种类加载器，他们之间有父子关系，加载类的请求会依次询问父加载器是否加载过，
+即双亲委派机制
 
-GC����
-new���������������У�����������Eden�����˻ᴥ��GC���������õĶ����Ƶ�from��Ȼ��Eden������������
-��Eden���ٴ�GCʱ���ὫEden����from�������õĶ����Ƶ�to����Eden����from����������ͬʱ��������+1��
-Ȼ��from����to���ύ�����ݣ�����������ﵽ�����׼������ͻᱻ���Ƶ���������׳�young GC��
-��������˻ᴥ��full GC��young GC��full GC�����STW��STW��ֹͣ��GC�������һ������
+GC过程
+Young GC：new对象存放在新生代中，当新生代中Eden区满了会触发GC，把有引用的对象复制到Survial0然后Eden区清空，
+当Eden区再次GC时，会将Eden区和Survial0有引用的对象复制到Survial1然后Eden区和Survial0清空，之后每次GC都是往空
+的Survial区复制，Survial区满或对象年龄达到限制（默认15），对象就会被复制到老年代；
+老年代满了会触发full GC，young GC和full GC会产生STW，STW会停止除GC任务外的一切任务
 
-���������������㷨����Щ��
-���ü�����JVM�ѷϳ��������ƣ����������������������ͱ�������������������
+常见的垃圾回收算法有哪些？
+引用计数（JVM已废除）、复制（用于新生代）、标记清除和标记整理（用于老年代）
 
-�������������շ�ʽ������������������Щ��
-���л�������ʹ�õ����߳̽��������������û��߳���ͣ���������������������������ʹ�ã�
-���л�������java8Ĭ�ϣ���ʹ�ö��߳̽��������������û��߳���ͣ�������������ֲ��л�������һ������������л��������ף�java6����
-��һ���Ǻ�������������ף�java8����
-������������CMS�����û��̺߳����������߳�ͬʱִ�У�GCͣ��ʱ��������ڶ���Ӧ�ٶ���Ҫ��ĳ�������������CPU����
-�����ڴ���Ƭ������������Ļ�������
-G1��java9Ĭ�ϣ��������������������������ڴ�ָ�ɲ�ͬ��С���鲢�������������գ�Ч�ʸߡ�û���ڴ���Ƭ��
-��������ר�ŵ�������Ŵ��������������GCͣ��ʱ�䣻
-ZGC��java11��
+常见的垃圾回收方式（垃圾回收器）有哪些？
+串行回收器：使用单个线程进行垃圾回收且用户线程暂停，新生代和老年代各一个，它们配套使用；
+并行回收器（java8默认）：使用多线程进行垃圾回收且用户线程暂停，新生代有两种并行回收器，一个和老年代串行回收器配套（java6），
+另一个是和老年代并行配套（java8）；
+并发标记清除（CMS）：用户线程和垃圾回收线程同时执行，GC停顿时间短适用于对响应速度有要求的场景，但会增加CPU消耗
+和有内存碎片，属于老年代的回收器；
+G1（java9默认）：横跨新生代和老年代，将堆内存分割成不同的小区块并发进行垃圾回收，效率高、没有内存碎片，
+并且它有专门的区来存放大对象，它还能设置GC停顿时间；
+ZGC（java11）
 
-ʲô��GC Roots��
-GC Roots��ö�ٸ��ڵ㣬�ɴ��Է����Ķ�����㣬�������㿪ʼ����·�ܵ���Ķ����ʾ�ɴ�ж�Ϊ������
-�ж�����
+什么是GC Roots？
+GC Roots是枚举根节点，可达性分析的对象起点，从这个起点开始，链路能到达的对象表示可达，判定为存活，否则
+判定死亡
 
-ʲô��JMM��
-JMM��java�ڴ�ģ�ͣ���������ʵ���ڣ����̼߳���Ĺ����ڴ棬���ڶԱ����Ĳ���
+什么是JMM？
+JMM是java内存模型，它并不真实存在，是线程级别的工作内存，用于对变量的操作
 
-�Ų���ϵķ�ʽ����Щ��
-�鿴Linux��־��
-ʹ��Idea�ն�jps���λ���̺ţ���jstack����鿴java��ջ��Ϣ
+排查故障的方式有哪些？
+查看Linux日志；
+使用Idea终端jps命令定位进程号，和jstack命令查看java堆栈信息
 
-JVM����XX����
--XX:+PrintGCDetails����ӡGC�ռ�ϸ�ڣ�
--XX:MatespaceSize������Ԫ�ռ��С��
--XX:MaxTenuringThreshold�������������������������������Ĭ��15����
--XX:InitialHeapSize��-Xms�������ó�ʼ���ڴ棬Ĭ�������ڴ�1/64��
--XX:MaxHeapSize��-Xmx�������������ڴ棬Ĭ�������ڴ�1/4��
--XX:ThreadStackSize��-Xss���������߳�ջ��С��Ĭ��ֵ��0��0��ʾJDKΪϵͳ��Linux��macOS��Windows�����õ�Ĭ�ϴ�С��1024kb
--XX:MaxDirectMemorySize���������ֱ���ڴ��С��
--XX:+UseG1GC������ΪG1������������
--Xmn�����������������С��Ĭ�϶��ڴ��1/3��
--XX:SurvivorRatio������Eden����������ı�����Ĭ��8:1:1��
--XX:NewRatatio������������ڶ��ڴ�ı�����Ĭ��2:1
-ͨ��Idea�ն�jps�����jinfo����鿴����ֵ
+JVM常用XX参数
+-XX:+PrintGCDetails：打印GC收集细节；
+-XX:MatespaceSize：设置元空间大小；
+-XX:MaxTenuringThreshold：设置新生代到老年代的年龄条件（默认15）；
+-XX:InitialHeapSize（-Xms）：设置初始堆内存，默认物理内存1/64；
+-XX:MaxHeapSize（-Xmx）：设置最大堆内存，默认物理内存1/4；
+-XX:ThreadStackSize（-Xss）：设置线程栈大小，默认值是0，0表示JDK为系统（Linux、macOS或Windows）设置的默认大小是1024kb
+-XX:MaxDirectMemorySize：设置最大直接内存大小；
+-XX:+UseG1GC：设置为G1垃圾回收器；
+-Xmn：设置设置年轻代大小，默认堆内存的1/3；
+-XX:SurvivorRatio：设置Eden区在年轻代的比例，默认8:1:1；
+-XX:NewRatatio：设置老年代在堆内存的比例，默认2:1
+通过Idea终端jps命令和jinfo命令查看参数值
 
-�鿴���̲�����jinfo -flags ����id
-�鿴��ʼ������java -XX:+PrintFlagsInitial
-�鿴���ղ�����java -XX:+PrintFlagsFinal
-=��ʾû�Ĺ�
-:=��ʾ��Ϊ�Ĺ���JVM�Ĺ�
+查看进程参数：jinfo -flags 进程id
+查看初始参数：java -XX:+PrintFlagsInitial
+查看最终参数：java -XX:+PrintFlagsFinal
+=表示没改过
+:=表示人为改过或JVM改过
 
-JVM��������ģ��
+JVM参数调优模板
 -XX:+PrintGCDetails -Xms128m -Xmx2048m -Xss1024k -XX:MetaSpaceSize=512m -XX:+PrintCommandLineFlags
 
-���SpringBootʵ��JVM����
-java -server ��Ҫ�Ż��Ĳ��� -jar jar����
+结合SpringBoot实现JVM调优
+java -server 需要优化的参数 -jar jar包名
 
-4��������������Щ��
-ǿ���ã�ֱ��new���󣬼�ʹ������OOMҲ���ᱻGC���գ�
-�����ã���SoftReference��������OOM�ŻᱻGC���գ�
-�����ã���WeakReference������GC�ͻᱻ���գ�
-�����ã�PhantomReference��ReferenceQueue����ʹ�ã�����GC�ᱻ�������ö���
-���������ÿ����ڸ��ٻ��泡�����ȱ�֤�˶�ȡ�ٶ��ֲ�ռ�ڴ�
+4大引用类型有哪些？
+强引用：直接new对象，即使发生了OOM也不会被GC回收；
+软引用：用SoftReference，发生了OOM才会被GC回收；
+弱引用：用WeakReference，发生GC就会被回收；
+虚引用：PhantomReference和ReferenceQueue联合使用，发生GC会被放入引用队列
+软、弱引用可用于高速缓存场景，既保证了读取速度又不占内存
 
-�����Ĵ�������Щ��
-StackOverflowError��ջ�����
-OOM�����
-java heap space���ڴ治�㡢
-MetaspaceԪ�ռ䲻�㡢
-GC overhead limit exceeded�����������գ�������ռ��98%��Դ����
-Direct buffer memoryֱ���ڴ治�㡢
-unable to create new native thread�̴߳�������ϵͳ����
+常见的错误有哪些？
+StackOverflowError：栈溢出；
+OOM类错误：
+java heap space堆内存不足、
+Metaspace元空间不足、
+GC overhead limit exceeded过度垃圾回收（垃圾回占用98%资源）、
+Direct buffer memory直接内存不足、
+unable to create new native thread线程创建超出系统限制
 
-ʲô��JUC��
-JUC��java�������߰�����������jdk��rj.jar�У�������atomic����locks����
-atomic���ṩ�˾���ԭ���Ͳ������࣬ͨ��CAS����ʵ�֣�
-locks���ṩ��һЩ����ʵ�֣��ײ���AQS�������ͬ����
+什么是JUC？
+JUC是java并发工具包，它存在于jdk的rj.jar中，它包含atomic包和locks包，
+atomic包提供了具有原子型操作的类，通过CAS机制实现，
+locks包提供了一些锁的实现，底层是AQS抽象队列同步器
 
-ʲô��AQS
-AQS�ǳ������ͬ��������JUC������ص��࣬��û�л�ȡ�����߳����ó�һ��int���͵Ľڵ�״̬�ŵ������
-��һ���߳��ͷ����󣬻Ὣ�����������̻߳����ٴγ��Ի�ȡ������getState()��ȡ�ڵ�״̬��
-Ȼ��������CAS�ķ�����setState()ȥ���Ľڵ�״̬
+什么是AQS
+AQS是抽象队列同步器，是JUC下锁相关的类，将没有获取锁的线程设置成一个int类型的节点状态放到队列里，
+当一个线程释放锁后，会将这个队列里的线程唤醒再次尝试获取锁，用getState()获取节点状态，
+然后它用了CAS的方法和setState()去更改节点状态
 
-volatile�ؼ��ֵ�����
-���߳��У���֤���ݿɼ��Ժͽ�ָֹ�����ţ�����֤ԭ����
+volatile关键字的特性
+多线程中，保证数据可见性和禁止指令重排，不保证原子性
 
-ʲô��AtomicInteger��
-AtomicInteger��atomic���µ�һ��ԭ�Ӱ�װ�࣬����������ԭ���ԣ�
-Ȼ������������volatile����value������������Ҳ���пɼ���
+什么是AtomicInteger？
+AtomicInteger是atomic包下的一个原子包装类，所以它具有原子性，
+然后类里面用了volatile修饰value，所以它本身也具有可见性
 
-ʲô��CAS��
-CASָcompareAndSet�Ƚϲ��������ǵײ�unsafe��ķ����������䵱java�Ͳ���ϵͳ�ײ�
-��һ�����������Ը����ڴ��ַƫ�����ж��ڴ�ĳ��λ�õ�ֵ�Ƿ���Ԥ��ֵ�����޸Ĳ�������Ҳ��
-��֤�����ݵ�ԭ����
+什么是CAS？
+CAS指compareAndSet比较并交换，是底层unsafe类的方法，这个类充当java和操作系统底层
+的一个桥梁，可以根据内存地址偏移量判断内存某个位置的值是否是预期值再做修改操作，这也就
+保证了数据的原子性
 
-Ϊʲô��CAS������synchronized��
-��Ϊsynchronized��Ȼ��֤�����ݵ�ԭ���ԣ����������ܵ���CAS��CAS����������ͨ��ѭ���ж�
-������������֤����ԭ���ԣ���Ϊ��������������Ƶ���Ļ����̺߳ͱ���������������������ܣ�
-��ѭ��ʱ�䳤�˻�����CPU����
+为什么用CAS而不用synchronized？
+因为synchronized虽然保证了数据的原子性，但是它性能低于CAS，CAS不用上锁，通过循环判断
+（自旋）来保证数据原子性，因为是自旋，避免了频繁的唤醒线程和避免阻塞，所以提高了性能，
+但循环时间长了会增加CPU消耗
 
-CASȱ��
-ѭ��ʱ�䳤�Ļ�CPU������ֻ�ܱ�֤һ�����ݵ�ԭ����
+CAS缺点
+循环时间长的话CPU开销大、只能保证一个数据的原子性
 
-ʲô��ABA���⣿
-��CAS�����У����һ���̱߳���һ���߳̽�����Ҫ�죬��ô�������������߳̿��԰����ݸ�һ��
-֮���ָĻ��������ʱ����һ���̲߳ſ�ʼҪ�޸����ݣ���ʱ���ݱ�������û�б�ģ�����ʵ���Ѿ�
-������̸߳��Ĺ��ˣ����Ե�ǰ�߳�Ҳ����ɸ��ģ������ABA����
+什么是ABA问题？
+在CAS机制中，如果一个线程比另一个线程结束的要快，那么这个更快结束的线程可以把数据改一次
+之后又改回来，这个时候另一个线程才开始要修改数据，此时数据本质上是没有变的，但其实它已经
+被别的线程更改过了，所以当前线程也能完成更改，这就是ABA问题
 
-��ô���ABA���⣿
-������AtomicStampedReference��ʱ������汾�ţ���ԭ���Զ���������
+怎么解决ABA问题？
+可以用AtomicStampedReference带时间戳（版本号）的原子性对象引用类
 
-�����̰߳�ȫ����
-List��Set��Map�����̲߳���ȫ�ģ���Ϊ���ǵ�add()��put()��û��synchronizeed
-����̲߳���ȫ�İ취�У�
-1��List���Ͽ�����Vector��Set���Ͽ�����HashTable��Map���Ͽ�����ConcurrentHashMap
-2��������Collections�������´�synchronizedͬ����List��Set��Map
-3��������дʱ���Ʒ���
+集合线程安全问题
+List、Set、Map都是线程不安全的，因为它们的add()、put()都没有synchronizeed
+解决线程不安全的办法有：
+1、List集合可以用Vector、Set集合可以用HashTable、Map集合可以用ConcurrentHashMap
+2、可以用Collections集合类下带synchronized同步的List、Set和Map
+3、可以用写时复制方法
 
-ʲô��дʱ���ƣ�
-��list������������ʱ���Ȱ�list���Ƶ�һ������+1��list������Ҫ���ӵ����ݼӵ����list���
+什么是写时复制？
+往list集合添加数据时，先把list复制到一个长度+1的list，最后把要添加的数据加到这个list最后
 
-��֪��HashSet�ĵײ���HashMap��ΪʲôHashSet�õ���add()������put��
-��ʵ�ײ㻹���õ�HashMap��put()��������ֻ����key������value�õ���Object����
+都知道HashSet的底层是HashMap，为什么HashSet用的是add()而不是put？
+其实底层还是用的HashMap的put()，但这里只关心key，至于value用的是Object常量
 
-CountDownLatch��CyclicBarrier��Semaphore��ʲô����
-CountDownLatch�������̵߳ȴ��������߳�ִ�������ִ�У��ݼ�ͳ�ƣ�
-CyclicBarrier������ÿ���߳�ִ����֮�������������һ���߳�ִ����֮����һ��ִ�У�����ͳ�ƣ�
-Semaphore����1��������Դ�Ļ��⡢2���������Ŀ���
+CountDownLatch、CyclicBarrier、Semaphore有什么区别？
+CountDownLatch用于主线程等待所有子线程执行完成再执行，递减统计；
+CyclicBarrier用于在每个线程执行完之后阻塞，当最后一个线程执行完之后再一起执行，递增统计；
+Semaphore用于1、共享资源的互斥、2、并发量的控制
 
-ʲô��BlockingQueue��
-BlockingQueue���������У����õ���ArrayBlockingQueue�����н��������С�
-LinkedBlockingQueue���������н��������У�Ĭ��Integer������ֵ����Ҳ����ָ����С��
-SynchronousQueue��һ��ͬ�����У�������������ģʽ
+什么是BlockingQueue？
+BlockingQueue是阻塞队列，常用的有ArrayBlockingQueue数组有界阻塞队列、
+LinkedBlockingQueue链表理论有界阻塞队列（默认Integer类的最大值），也可以指定大小、
+SynchronousQueue是一个同步队列，生产者消费者模式
 
-�̳߳ص�ʵ�ַ�ʽ����Щ��
-���õ��̳߳���3�֣�
-FixedThreadPool������һ��ָ����С���̳߳أ�
-SingleThreadExecutor������һ����һ�̵߳��̳߳أ�
-CachedThreadPool������һ������Ӧ���ݵ��̳߳�
-FixedThreadPool��SingleThreadExecutor��������ж���LinkedBlockingQueue����СĬ��Integer������ֵ��
-��CachedThreadPool��Ȼ�õ���SynchronousQueue�������������ͬʱִ���߳�����Integer������ֵ������
-�����׵���OOM���ڴ治�㣩�����ǽ���ͨ��ThreadPoolExecutor��д�̳߳�
+线程池的实现方式有哪些？
+常用的线程池有3种，
+FixedThreadPool：创建一个指定大小的线程池；
+SingleThreadExecutor：创建一个单一线程的线程池；
+CachedThreadPool：创建一个自适应扩容的线程池
+FixedThreadPool和SingleThreadExecutor的任务队列都是LinkedBlockingQueue，大小默认Integer类的最大值，
+而CachedThreadPool虽然用的是SynchronousQueue，但是它的最大同时执行线程数是Integer类的最大值，所以
+都容易导致OOM（内存不足），还是建议通过ThreadPoolExecutor手写线程池
 
-ThreadPoolExecutor�̳߳�7�����
-corePoolSize�������߳�����
-maximumPoolSize�����ͬʱִ���߳�����
-keepAliveTime���Ǻ����̴߳��ʱ�䣻
-unit��ʱ�䵥λ��
-workQueue��������У���δִ�е�����
-threadFactory�����ڴ����̵߳Ĺ�����
-handler���ܾ����ԣ�������ʱ�ҹ����̴߳������ͬʱִ���߳���ʱ����
+ThreadPoolExecutor线程池7大参数
+corePoolSize：核心线程数；
+maximumPoolSize：最大同时执行线程数；
+keepAliveTime：非核心线程存活时间；
+unit：时间单位；
+workQueue：任务队列，还未执行的任务；
+threadFactory：用于创建线程的工厂；
+handler：拒绝策略，队列满时且工作线程大于最大同时执行线程数时触发
 
-�̳߳صײ㹤��ԭ��
-�����к����߳��ڴ���������������������ˣ��Ὣ���������ŵ�������У����������Ҳ���˵�ʱ��
-�ͻῪ���Ǻ����߳���ִ��½������������ֱ�������̴߳������ͬʱִ���߳���ʱ���ͻᴥ���ܾ�
-���ԣ���������������ˣ����շǺ����̴߳��ʱ�䣬�رշǺ����߳�
+线程池底层工作原理
+首先有核心线程在处理任务，如果并发高起来了，会将后面的任务放到任务队列，当任务队列也满了的时候，
+就会开启非核心线程来执行陆续进来的任务，直到工作线程大于最大同时执行线程数时，就会触发拒绝
+策略，如果并发降下来了，按照非核心线程存活时间，关闭非核心线程
 
-ThreadPoolExecutor�̳߳�4��ܾ�����
-AbortPolicy��Ĭ�ϣ����׳��ܾ�ִ���쳣����ִֹͣ�У�
-CallerRunsPolicy��������ִ�л��ƣ������񽻸����߳�ִ�У�
-DiscardOldestPolicy�����������еȴ���õ����񲢽���ǰ���������г����ٴ��ύ��
-DiscardPolicy���������񣬲�����Ҳ�����쳣
+ThreadPoolExecutor线程池4大拒绝策略
+AbortPolicy（默认）：抛出拒绝执行异常，且停止执行；
+CallerRunsPolicy：调用者执行机制，把任务交给父线程执行；
+DiscardOldestPolicy：抛弃队列中等待最久的任务并将当前任务加入队列尝试再次提交；
+DiscardPolicy：丢弃任务，不处理也不抛异常
 

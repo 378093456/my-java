@@ -1,148 +1,146 @@
-���ݿ�������ȱ�㼰���ݿ��Ż�
-ȱ���ǻ�Ӵ��ڴ�����ĺͼ������ݸ��µ�Ч�ʣ�
-�Ż����ݿ���������ڣ�Ӳ�������ݡ�sql�Ż������ṹ����Ż��������Ż�
+﻿数据库索引优缺点及数据库优化
+缺点是会加大内存的消耗和减慢数据更新的效率；
+优化数据库可以体现在：硬件上扩容、sql优化、表结构设计优化、索引优化
 
-�����Ż�
-�ѹ����Ժõ��ֶ���Ϊ�����ֶΣ�
-ʹ���������ʱ����ѭ��������ԭ��
-�޹��ˡ���������
-����Ǳ�Ҫ�Ĳ�ѯ�ֶΣ�
-���������ֶ�����ͷģ����ѯ��
-���������ֶ�ʹ�ú�����
-���������ֶ�ʹ�ò����ڲ�ѯ��
-���������ֶ��ڷ�Χ��ѯ֮��
-���������ֶ�ʹ��is not null��ѯ�����ܻ�����ʧЧ����mysql�Ż���������
+索引优化
+把过滤性好的字段作为索引字段；
+使用组合索引时，遵循索引最左原则；
+无过滤、不索引；
+避免非必要的查询字段；
+避免索引字段做开头模糊查询；
+避免索引字段使用函数；
+避免索引字段使用不等于查询；
+避免索引字段在范围查询之后；
+避免索引字段使用is not null查询，可能会索引失效（由mysql优化器决定）
 
-����ʧЧ����Щԭ��
-û����ѭ��������ԭ��
-û�й���������
-�����ֶ�����ͷģ����ѯ��
-�����ֶ�ʹ�ú�����
-�����ֶ�ʹ�ò����ڲ�ѯ��
-�����ֶ��ڷ�Χ��ѯ֮��
-�����ֶ�ʹ��is not null��ѯ���ܻ�����ʧЧ����mysql�Ż���������
+索引失效有哪些原因？
+没有遵循索引最左原则；
+没有过滤条件；
+索引字段做开头模糊查询；
+索引字段使用函数；
+索引字段使用不等于查询；
+索引字段在范围查询之后；
+索引字段使用is not null查询可能会索引失效（由mysql优化器决定）
 
-ʲô�����ݿ�����ʽ��
-���ݿ�����ʽ��������ݿ���ķ����ۣ���Ҫ���ֶβ����ٷ֣��������ֶζ������������ֶ��Ҳ��ܼ������
+什么是数据库三方式？
+数据库三范式是设计数据库表的方法论，它要求字段不可再分，非主键字段都能依赖主键字段且不能间接依赖
 
-jvmΪʲôҪ�������������������ΪʲôҪ��eden����survial����
-�������л����������ʱ������Щ������ʱ������������������������Ҫ�������������Ч����
-���Ƶ����������Ϊ��������Щ����Ӧ�ø��Ƶ��������������������������eden����survial����
-����Ҫ���Ǳ�֤���ڴ�ռ�����
+jvm为什么要区分新生代和老年代，为什么要分eden区和survial区？
+程序运行会产生海量临时对象，这些对象被临时放在新生代，新生代满了需要清理垃圾会把有效对象
+复制到老年代，而为了区分哪些对象应该复制到老年代，所以在新生代划分了eden区和survial区，
+最重要的是保证了内存空间连续
 
-������Զ�̵���
-tcp��udpЭ�顢httpЭ�飨����tcp����dubbo
+常见的远程调用
+tcp和udp协议、http协议（基于tcp）、dubbo
 
-������@transactional��Ӱ��ȫ�ֵ����Ҫôȫ���ɹ���Ҫôȫ��ʧ��
+类中有@transactional会影响全局的事物，要么全部成功，要么全部失败
 
-springboot��ι����汾����
-springbootʹ��maven����������ͨ��pom�ļ��ĸ��ӹ�ϵ���ö����ܺͰ汾��
+springboot如何管理版本依赖
+springboot使用maven管理依赖，通过pom文件的父子关系配置定义框架和版本号
 
-ʲô���Զ����ã�
-springboot�ṩ��һЩ��ܵ�Ĭ���������򻯿�����ͨ�����������@SpringBootApplication��ʵ��
+什么是自动配置？
+springboot提供了一些框架的默认配置来简化开发，通过在启动类加@SpringBootApplication来实现
 
-ʲô����������
-����ָpom�ļ���������starter�������������ص������������ļ�������Ҫ�ֶ�����
+什么是起步依赖？
+就是指pom文件里依赖的starter，里面包含了相关的依赖和配置文件，不需要手动配置
 
-jsp�˴���������
-pageContext��request��session��application��response��out��config��page
+jsp八大隐含对象
+pageContext、request、session、application、response、out、config、page
 
-ʲô��IOC���Ʒ�ת��
-�ǽ�����Ĵ���Ȩ����spring����
+什么是IOC控制反转？
+是将对象的创建权交给spring容器
 
-ʲô��DI����ע�룿
-�ǽ������Ķ���ʵ������spring������ע�룬��set()����ע�롢���췽��ע�롢@Autowired�Զ�ע��
+什么是DI依赖注入？
+是将依赖的对象实例交给spring帮我们注入，用set()方法注入、构造方法注入、@Autowired自动注入
 
-linux����
-���˻������ļ����ļ��е���ɾ������֮�⣬�Ƚϳ��õ���cat��tail�鿴��־��nohup���Ҷ�ʽ��������ps�鿴���̡�kill�ؽ��̡�
-centos7��systemctl status��systemctl start��systemctl restart��systemctl stop��һЩ����Ĳ���
+linux命令
+除了基本的文件、文件夹的增删改命令之外，比较常用的有cat、tail查看日志、nohup不挂断式启动程序、ps查看进程、kill关进程、
+centos7的systemctl status、systemctl start、systemctl restart、systemctl stop对一些服务的操作
 
-��Ը߲����߿��õĴ�����ʽ
-��־��ԴѰ��ƿ����ҵ���֡�Ӳ������
+针对高并发高可用的处理方式
+日志溯源寻找瓶颈、业务拆分、硬件扩容
 
-���ݿ����ӳصĹ�������
-������һЩ���ݿ����ӷŵ����ӳأ����������С����������С��������֤�����ݿ�����ӣ�������С�������Ŀ������ӻᱻ����
+数据库连接池的工作机制
+创建数据库连接放到连接池，设置最大、最小连接数，最小连接数保证与数据库的连接，超过最小连接数的空闲连接会被回收
 
-ʲô�ǶԳƼ����㷨��
-�ԳƼ����㷨�Ǽ��ܺͽ�����ͬһ����Կ������DES��AES
+什么是对称加密算法？
+对称加密算法是加密和解密用同一个秘钥，例如DES、AES
 
-ʵ����ʼ������
-�����ʱ����̬�����򷽷�����̬�����
-new����ʱ���Ǿ�̬�����򷽷����Ǿ�̬�����->�޲ι��췽��
+实例初始化过程
+类加载时：加载静态变量或方法、加载静态代码块
+实例化对象时：加载非静态变量或方法、加载非静态代码块、加载无参构造方法（最后）
 
-��Щ���������Ա���д��
-static������final������private����
+哪些方法不可以被重写？
+static方法、final方法、private方法
 
 @WebFilter(filterName = "xxx", urlPatterns = { "/*" })
-���ڽ���ǰ������Ϊ���������ڳ���������ʱ��������ö�request��response��Ԥ���������ñ����ʽ��
+用于将当前类设置为过滤器，在程序启动的时候根据配置对request、response做预处理（设置编码格式）
 
-jvm����ʱ�������������Щ��
-�ѣ���Ŷ����ʵ��
-�����ջ����žֲ������Ͷ������á�������ִ��
-���ط���ջ���������ջ���ƣ������ջ�Ǵ���java����ģ����ط���ջ�Ǵ���ϵͳ���صķ�����native���εģ���
-�����ȡϵͳCPU��������ǰϵͳʱ������ֶ���������
-����������������Ϣ�������;�̬������java8֮ǰ����Ϊ���ô�����������ڴ棩��java8֮����Ԫ�ռ䣨��ϵͳ�����ڴ棩
-��������������ڼ��������һ����Ҫִ�е��ֽ���ָ��
+jvm运行时数据区域包含哪些？
+堆：存放对象的实例
+虚拟机栈：存放局部变量和对象引用、方法的执行
+本地方法栈：跟虚拟机栈相似，虚拟机栈是处理java服务的，本地方法栈是处理系统本地的方法（native修饰的），
+比如获取系统CPU核数、当前系统时间戳、手动垃圾回收
+方法区：存放类的信息、常量和静态变量，java8之前被称为永久代（用虚拟机内存），java8之后是元空间（用系统本地内存）
+程序计数器：用于计算程序下一条需要执行的字节码指令
 
-���̵߳�ʵ�ַ���
-�̳�Thread�࣬��дrun()��
-ʵ��Runnable�ӿڣ��޷���ֵ�������쳣������дrun()��
-ʵ��Callable�ӿڣ�������ֵ�����쳣������дcall()����ΪThread��û��ֱ��ʵ��Callable�ķ�����
-��Ҫͨ��FutureTask����FutureTaskʵ����Runnable�ӿڣ�
-ͨ��ExecutorService�����̳߳�;
-ͨ��ThreadPoolExecutor��д�̳߳�
+多线程的实现方法
+继承Thread类，重写run()；
+实现Runnable接口（无返回值、不抛异常），重写run()；
+实现Callable接口（带返回值、抛异常），重写call()，因为Thread类没有直接实现Callable的方法，
+需要通过FutureTask，而FutureTask实现了Runnable接口；
+通过ExecutorService创建线程池;
+通过ThreadPoolExecutor手写线程池
 
 FutureTask.isDone()
-FutureTask.isDone()����Callable�߳��Ƿ�ִ�����
+FutureTask.isDone()返回Callable线程是否执行完成
 
-�̳߳غ��̵߳�����ʲô��
-�߳��ǵ�һ�ģ��̳߳���һȺ�̵߳ļ��壬Ч������������һ���̻߳�Ƶ���ش��������ٺ��̼߳����ػ��ѣ���Դ���Ĵ�
-�̳߳��ܽ���Щ�̸߳��ÿ��Ա���������������������ܿ�����󲢷������ײ�����������
+线程池和线程的区别什么？
+线程是单一的，线程池是一群线程的集体，效率上来看，单一的线程会频繁地创建、销毁和线程间来回唤醒，资源消耗大，
+线程池能将这些线程复用可以避免这种情况，而且它还能控制最大并发量，底层是阻塞队列
 
-ͬ����ʵ�ַ���
-������ʹ��synchronizedͬ������顢lockͬ����
-������������ʹ��volatile�ؼ������Σ�����֤����ԭ���ԣ���ʵ�ֶ��̷߳��ʹ�����������ͬ����CAS
+同步的实现方法
+阻塞：使用synchronized同步代码块、lock同步锁
+非阻塞：变量使用volatile关键字修饰（不保证数据原子性）、CAS
 
-synchronized��lock��������ʲô��
-synchronized�ǹؼ��֣�������JVM���Դ������ͷź��쳣�ͷţ�����Ҫ�ֶ��ͷ�����
-lock��JUC��locks���µĽӿڣ�lock��Ҫ�ֶ��ͷ�����
-synchronized�Ƿǹ�ƽ����lock֧�ֹ�ƽ���ͷǹ�ƽ����Ĭ�Ϸǹ�ƽ����
-lock�����жϱ��������̣߳�
-synchronizedֻ֧����������̣߳�lockͨ��Condition�ӿڿ��Ծ�ȷ�����߳�
+synchronized和lock的区别是什么？
+synchronized是关键字，它属于JVM，自带正常释放和异常释放，不需要手动释放锁；
+lock是JUC中locks包下的接口，lock需要手动释放锁；
+synchronized是非公平锁，lock支持公平锁和非公平锁，默认非公平锁；
+lock可以中断被阻塞的线程；
+synchronized只支持随机唤醒线程，lock通过Condition接口可以精确唤醒线程
 
-Condition��
-Condition����JUC��locks���µĽӿڣ�ͨ������await()/signal()���Ծ�ȷ�����߳�
+Condition接口
+Condition接口是JUC中locks包下的接口，通过它的await()/signal()可以精确唤醒线程
 
-interrupt()����������
-�����жϱ��������߳�
+interrupt()方法的作用
+用于中断被阻塞的线程
 
-thread.yield()������
-ͬ�����߳��ò�������ǰ�̴߳�����״̬�ĳɿ�����״̬
+yield()的作用
+同级别线程让步，将当前线程从运行状态改成可运行状态
 
-���߳���start()������run()������������ʲô��
-start()���������������̵߳ģ�run()���������Ǿ���ִ�еĴ���
+多线程中start()方法和run()方法的区别是什么？
+start()方法是用来启动线程的，run()方法里面是具体执行的代码
 
-Lock()��tryLock()������
-lock()û�з���ֵ�����Ի�ȡ��ʧ�ܻ�������
-tryLock()������ֵ���������ó�ʱ�����Ի�ȡ��ʧ�ܺ����������ʱʱ��᷵��false�����Ա���������
+Lock()和tryLock()的区别？
+lock()没有返回值，尝试获取锁失败会阻塞；
+tryLock()带返回值，可以设置超时，尝试获取锁失败后，如果超过超时时间会返回false，可以避免阻塞，
 
-ʲô��CountdownLatch��
-CountdownLatch��JUC�е��࣬�������̵߳ȴ��������߳�ִ�������ִ�У�ʵ����һ��
-���߳�����CountdownLatch����ÿ�����߳�ִ����֮���һ��countDown()�����ͻ��1��
-Ȼ�������߳�ִ��֮ǰ����await()����������CountdownLatch��������0ʱ�Զ��������߳�
+什么是CountdownLatch？
+CountdownLatch是JUC中的类，用于主线程等待所有子线程执行完成再执行，在每个子线程执行完之后
+调用countDown()，然后在主线程执行之前调用await()来阻塞
 
-ʲô��ReentrantLock��
-ReentrantLock��һ������ʵ�֣��ǿ�����������֧�ֹ�ƽ���ͷǹ�ƽ����Ĭ���Ƿǹ�ƽ��
+什么是ReentrantLock？
+ReentrantLock是一种锁的实现，是悲观锁、可重入锁，它支持公平锁和非公平锁，默认是非公平锁
 
-ʲô��ReadWriteLock��
-ReadWriteLock��ReentrantLock��࣬��ͬ���ǣ������Զ�д�����룬��֤��д������ԭ���Ի�
-����˶��Ĳ�����
+什么是ReadWriteLock？
+ReadWriteLock跟ReentrantLock差不多，不同的是，它可以读写锁分离，保证了并发下写的数据原子性还
+不影响读的性能
 
-��ƽ���ͷǹ�ƽ��������
-��ƽ�����߳�ƽ��������Ȼ�󰴻�ȡ����˳��ִ�У��̻߳��ѵĿ��������ܵͣ�
-�ǹ�ƽ�����߳������ȡ����˭���õ���˭����ִ�У����ܸ�
+公平锁和非公平锁的区别？
+公平锁是线程平均分配锁然后按获取锁的顺序执行，线程唤醒的开销大，性能低；
+非公平锁是线程随机获取锁，谁先拿到锁谁就先执行，性能高
 
-ʲô�ǿ��������Ͳ�����������
-���������ֽеݹ�������ǰ�߳̿����ٴλ�ȡ�Ѿ�ӵ�е������������������ǵ�ǰ�߳�Ҫ�ٴλ�ȡ�Ѿ�ӵ�е���ʱ������Ҫ���ͷŵ�ǰ����
-��ʵ�������ͷŲ��˵Ļᵼ������
+什么是可重入锁和不可重入锁？
+可重入锁又叫递归锁，当前线程可以再次获取已经拥有的锁，而不可重入锁是当前线程要再次获取已经拥有的锁会导致死锁
 
