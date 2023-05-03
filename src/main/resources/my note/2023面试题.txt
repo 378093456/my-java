@@ -54,7 +54,7 @@ pageContext、request、session、application、response、out、config、page
 是将依赖的对象实例交给spring帮我们注入，用set()方法注入、构造方法注入、@Autowired自动注入
 
 linux命令
-除了基本的文件、文件夹的增删改命令之外，比较常用的有cat、tail查看日志、nohup不挂断式启动程序、ps查看进程、kill关进程、
+除了基本的文件、文件夹的增删改命令之外，比较常用的有cat、tail查看日志、nohup java -jar不挂断式启动程序、ps查看进程、kill关进程、
 centos7的systemctl status、systemctl start、systemctl restart、systemctl stop对一些服务的操作
 
 针对高并发高可用的处理方式
@@ -86,14 +86,14 @@ jvm运行时数据区域包含哪些？
 
 多线程的实现方法
 继承Thread类，重写run()；
-实现Runnable接口（无返回值、不抛异常），重写run()；
-实现Callable接口（带返回值、抛异常），重写call()，因为Thread类没有直接实现Callable的方法，
+实现Runnable接口（无返回值、没申明异常），重写run()；
+实现Callable接口（带返回值、有申明异常），重写call()，因为Thread类没有直接实现Callable的方法，
 需要通过FutureTask，而FutureTask实现了Runnable接口；
-通过ExecutorService创建线程池;
+通过java自带的ExecutorService创建线程池;
 通过ThreadPoolExecutor手写线程池
 
-FutureTask.isDone()
-FutureTask.isDone()返回Callable线程是否执行完成
+isDone()
+isDone()返回Callable线程是否执行完成
 
 线程池和线程的区别什么？
 线程是单一的，线程池是一群线程的集体，效率上来看，单一的线程会频繁地创建、销毁和线程间来回唤醒，资源消耗大，
@@ -107,7 +107,7 @@ synchronized和lock的区别是什么？
 synchronized是关键字，它属于JVM，自带正常释放和异常释放，不需要手动释放锁；
 lock是JUC中locks包下的接口，lock需要手动释放锁；
 synchronized是非公平锁，lock支持公平锁和非公平锁，默认非公平锁；
-lock可以中断被阻塞的线程；
+synchronized不可以中断被阻塞的线程；
 synchronized只支持随机唤醒线程，lock通过Condition接口可以精确唤醒线程
 
 Condition接口
