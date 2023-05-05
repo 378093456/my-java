@@ -3,8 +3,14 @@ JVM是java虚拟机，编译好的字节码文件通过ClassLoader类加载器�
 跨平台性强
 
 简述一下JVM加载Class文件原理
-通过ClassLoader类加载器加载，有3种类加载器，他们之间有父子关系，加载类的请求会依次询问父加载器是否加载过，
+通过ClassLoader类加载器加载，有4种类加载器，当应用程序加载器加载类时，首先不会自己去加载，而是向上询问是否已加载，
 即双亲委派机制
+
+4大类加载器
+启动类加载器（Bootstrap ClassLoader）：加载java核心类库；
+扩展类加载器（Extansion ClassLoader）：加载java扩展类库；
+应用程序加载器（Application ClassLoader）：加载用户写的类；
+自定义类加载器：通过继承ClassLoader
 
 GC过程
 Young GC：new对象存放在新生代中，当新生代中Eden区满了会触发GC，把有引用的对象复制到Survial0然后Eden区清空，
@@ -26,7 +32,7 @@ G1（java9默认）：横跨新生代和老年代，将堆内存分割成不同�
 ZGC（java11）
 
 什么是GC Roots？
-GC Roots是枚举根节点，可达性分析的对象起点，从这个起点开始，链路能到达的对象表示可达，判定为存活，否则
+GC Roots是可达性分析的对象起点，从这个起点开始，链路能到达的对象表示可达，判定为存活，否则
 判定死亡
 
 什么是JMM？
@@ -84,7 +90,7 @@ atomic包提供了具有原子型操作的类，通过CAS机制实现，
 locks包提供了一些锁的实现，底层是AQS抽象队列同步器
 
 什么是AQS
-AQS是抽象队列同步器，是JUC下锁相关的类，将没有获取锁的线程设置成一个int类型的节点状态放到队列里，
+AQS是抽象队列同步器，是JUC中locks包的类，将没有获取锁的线程设置成一个int类型的节点状态放到队列里，
 当一个线程释放锁后，会将这个队列里的线程唤醒再次尝试获取锁，用getState()获取节点状态，
 然后它用了CAS的方法和setState()去更改节点状态
 
@@ -163,8 +169,8 @@ handler：拒绝策略，队列满时且工作线程大于最大同时执行线�
 策略，如果并发降下来了，按照非核心线程存活时间，关闭非核心线程
 
 ThreadPoolExecutor线程池4大拒绝策略
-AbortPolicy（默认）：抛出拒绝执行异常，且停止执行；
-CallerRunsPolicy：调用者执行机制，把任务交给父线程执行；
-DiscardOldestPolicy：抛弃队列中等待最久的任务并将当前任务加入队列尝试再次提交；
-DiscardPolicy：丢弃任务，不处理也不抛异常
+AbortPolicy拒绝策略（默认）：抛出拒绝执行异常，且停止执行；
+CallerRunsPolicy调用者执行策略：把任务交给父线程执行；
+DiscardOldestPolicy抛弃等待最久策略：抛弃队列中等待最久的任务并将当前任务加入队列尝试再次提交；
+DiscardPolicy抛弃策略：丢弃任务，不处理也不抛异常
 

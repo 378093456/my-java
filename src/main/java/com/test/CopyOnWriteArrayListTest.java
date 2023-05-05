@@ -2,6 +2,7 @@ package com.test;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 //使用写时复制，避免并发修改异常
 //往list集合添加数据时，先把list复制到一个长度+1的list，最后把要添加的数据加到这个list最后
