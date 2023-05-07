@@ -4,7 +4,7 @@ package com.test;
 
 //        JVM常用XX参数
 //        -XX:+PrintGCDetails：打印GC收集细节；
-//        -XX:MatespaceSize：设置元空间大小；
+//        -XX:MetaspaceSize：设置元空间大小；
 //        -XX:MaxTenuringThreshold：设置新生代到老年代的年龄条件（默认15）；
 //        -XX:InitialHeapSize（-Xms）：设置初始堆内存，默认物理内存1/64；
 //        -XX:MaxHeapSize（-Xmx）：设置最大堆内存，默认物理内存1/4；
