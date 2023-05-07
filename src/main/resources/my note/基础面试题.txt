@@ -49,7 +49,7 @@ redis持久化
 redis数据存放在内存中，重启后数据会丢失，所以需要将数据保存到磁盘中，当redis重启可以将数据从磁盘中恢复
 
 对jvm的了解
-java虚拟机，程序是在java虚拟机运行，一个程序可以有多个线程同时执行，线程之间可以共享内存，程序之间不能共享内存
+java虚拟机，程序是在java虚拟机运行，一个程序可以有多个线程同时执行
 
 redis
 @Cacheable查询、@CachePut添加、@CacheEvict修改和删除、redisTemplate.opsForValue()的set()方法设置有效时间和get()方法
