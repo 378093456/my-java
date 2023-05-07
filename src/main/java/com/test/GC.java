@@ -30,5 +30,10 @@ public class GC {
         System.out.println(Runtime.getRuntime().totalMemory());
         //查看虚拟机试图使用的最大堆内存
         System.out.println(Runtime.getRuntime().maxMemory());
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
