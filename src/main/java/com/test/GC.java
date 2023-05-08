@@ -28,8 +28,10 @@ public class GC {
         System.out.println(Runtime.getRuntime().availableProcessors());
         //查看虚拟机堆内存总量
         System.out.println(Runtime.getRuntime().totalMemory());
-        //查看虚拟机试图使用的最大堆内存
+        //查看虚拟机的最大堆内存
         System.out.println(Runtime.getRuntime().maxMemory());
+        //查看虚拟机的最大直接内存
+        System.out.println(sun.misc.VM.maxDirectMemory());
         try {
             Thread.sleep(Integer.MAX_VALUE);
         } catch (InterruptedException e) {
