@@ -57,7 +57,7 @@ JVM常用XX参数
 -XX:ThreadStackSize（-Xss）：设置线程栈大小，默认值是0，0表示JDK为系统（Linux、macOS或Windows）设置的默认大小是1024kb
 -XX:MaxDirectMemorySize：设置最大直接内存大小；
 -XX:+UseG1GC：设置为G1垃圾回收器；
--Xmn：设置年轻代大小，默认堆内存的1/3；
+-Xmn：设置设置年轻代大小，默认堆内存的1/3；
 -XX:SurvivorRatio：设置Eden区在年轻代的比例，默认8:1:1；
 -XX:NewRatatio：设置老年代在堆内存的比例，默认2:1
 通过Idea终端jps命令和jinfo命令查看参数值
@@ -69,10 +69,14 @@ JVM常用XX参数
 :=表示人为改过或JVM改过
 
 JVM参数调优模板
--XX:+PrintGCDetails -Xms128m -Xmx2048m -Xss1024k -XX:MetaSpaceSize=512m -XX:+PrintCommandLineFlags
+-XX:+PrintGCDetails -XX:+PrintCommandLineFlags -Xms2048m -Xmx2048m -XX:MetaSpaceSize=512m -XX:MaxDirectMemorySize=512m
 
 结合SpringBoot实现JVM调优
 java -server 需要优化的参数 -jar jar包名
+
+Linux服务器线程数上限调优
+ulimit -u命令查看线程数上限
+/etc/security/limits.d/目录下nproc.conf可以根据用户设置线程数上限
 
 4大引用类型有哪些？
 强引用：直接new对象，即使发生了OOM也不会被GC回收；
