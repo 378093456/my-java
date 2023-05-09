@@ -69,10 +69,10 @@ JVM常用XX参数
 :=表示人为改过或JVM改过
 
 JVM参数调优模板
--XX:+PrintGCDetails -XX:+PrintCommandLineFlags -Xms2048m -Xmx2048m -XX:MetaSpaceSize=512m -XX:MaxDirectMemorySize=512m
+-XX:+PrintGCDetails -XX:+PrintCommandLineFlags -Xms2048m -Xmx2048m -XX:MetaspaceSize=512m -XX:MaxDirectMemorySize=512m
 
 结合SpringBoot实现JVM调优
-java -server 需要优化的参数 -jar jar包名
+nohup java -server 需要优化的参数 -jar jar包名
 
 Linux服务器线程数上限调优
 ulimit -u命令查看线程数上限
