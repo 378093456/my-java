@@ -145,8 +145,8 @@ List、Set、Map都是线程不安全的，因为它们的add()、put()都没有
 其实底层还是用的HashMap的put()，但这里只关心key，至于value用的是Object常量
 
 CountDownLatch、CyclicBarrier、Semaphore有什么区别？
-CountDownLatch用于主线程等待所有子线程执行完成再执行，递减统计；
-CyclicBarrier用于在每个线程执行完之后阻塞，当最后一个线程执行完之后再一起执行，递增统计；
+CountDownLatch：递减计数，用于最后一个子线程执行完再执行父线程；
+CyclicBarrier：累加计数，用于最后一个线程执行完再统一执行；
 Semaphore用于1、共享资源的互斥、2、并发量的控制
 
 什么是BlockingQueue？
