@@ -141,7 +141,7 @@ CountdownLatch是JUC中的类，用于主线程等待所有子线程执行完成
 调用countDown()，然后在主线程执行之前调用await()来阻塞
 
 什么是ReentrantLock？
-ReentrantLock是一种锁的实现，是悲观锁、可重入锁，它支持公平锁和非公平锁，默认是非公平锁
+ReentrantLock是一种锁的实现，是悲观锁、独占锁、可重入锁，它支持公平锁和非公平锁，默认是非公平锁
 
 什么是ReadWriteLock？
 ReadWriteLock是读写分离的锁，读锁是共享锁，写锁是独占锁，在并发中既能保证写数据的原子性又不影响读
