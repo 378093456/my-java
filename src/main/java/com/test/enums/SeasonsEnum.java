@@ -3,7 +3,6 @@ package com.test.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
 @AllArgsConstructor
 @Getter
 //季节枚举类
