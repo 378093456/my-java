@@ -1,5 +1,7 @@
 package com.test;
 
+import org.springframework.util.ObjectUtils;
+
 import java.util.concurrent.*;
 
 //懒加载单例+线程安全
@@ -7,9 +9,7 @@ public class LazySingleton {
 
     private static LazySingleton instance = null;
 
-    private LazySingleton(){
-
-    }
+    private LazySingleton(){}
 
     public static LazySingleton getInstance(){
         //synchronized同步代码块+双重检查锁实现线程安全
